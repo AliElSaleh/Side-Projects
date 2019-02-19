@@ -66,14 +66,13 @@ void Draw()
 
 	ClearBackground(BLACK);
 
-
 	// Heart drawing
 	for (; Angle < PI*PI; Angle += 0.01f)
 	{	
 		// Shape 6
 		const float x = Radius * 16 * powf(sinf(Angle), 3);
 		const float y = -Radius * (13 * cosf(Angle) - 5*cosf(2*Angle) - 2*cosf(3*Angle) - cosf(4*Angle));
-		DrawPixel(GetScreenWidth()/2+x, GetScreenHeight()/2+y, WHITE);
+		DrawPixel(GetScreenWidth()/2+int(x), GetScreenHeight()/2+int(y), WHITE);
 	}
 
 	Angle = 0.0f;
