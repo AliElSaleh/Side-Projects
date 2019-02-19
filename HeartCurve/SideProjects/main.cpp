@@ -23,41 +23,60 @@
  */
 
 #include <raylib.h>
+#include <cmath>
+
+void Init();
+void Update();
+void Draw();
+
+float Angle = 0.0f;
+float Radius = 10;
 
 int main()
 {
-	// Initialization
-	//--------------------------------------------------------------------------------------
-	int screenWidth = 800;
-	int screenHeight = 450;
+	Init();
 
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
-
-	SetTargetFPS(60);
-	//--------------------------------------------------------------------------------------
-
-	// Main game loop
-	while (!WindowShouldClose())    // Detect window close button or ESC key
+	while (!WindowShouldClose())
 	{
-		// Update
-		//----------------------------------------------------------------------------------
-		// TODO: Update your variables here
-		//----------------------------------------------------------------------------------
-
-		// Draw
-		//----------------------------------------------------------------------------------
-		BeginDrawing();
-
-		ClearBackground(RAYWHITE);
-
-		DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
-		EndDrawing();
-		//----------------------------------------------------------------------------------
+		Update();
+		Draw();
 	}
 
-	// De-Initialization
-	//--------------------------------------------------------------------------------------   
-	CloseWindow();        // Close window and OpenGL context
-    //--------------------------------------------------------------------------------------
+	CloseWindow();
+}
+
+void Init()
+{
+	const unsigned short ScreenWidth = 800;
+	const unsigned short ScreenHeight = 450;
+
+	InitWindow(ScreenWidth, ScreenHeight, "Heart Curve");
+
+	SetTargetFPS(120);
+}
+
+void Update()
+{
+	SetWindowTitle(FormatText("Heart Curve | FPS: %i", GetFPS()));
+}
+
+void Draw()
+{
+	BeginDrawing();
+
+	ClearBackground(BLACK);
+
+
+	// Heart drawing
+	for (; Angle < PI*PI; Angle += 0.01f)
+	{	
+		// Shape 6
+		const float x = Radius * 16 * powf(sinf(Angle), 3);
+		const float y = -Radius * (13 * cosf(Angle) - 5*cosf(2*Angle) - 2*cosf(3*Angle) - cosf(4*Angle));
+		DrawPixel(GetScreenWidth()/2+x, GetScreenHeight()/2+y, WHITE);
+	}
+
+	Angle = 0.0f;
+
+	EndDrawing();
 }
